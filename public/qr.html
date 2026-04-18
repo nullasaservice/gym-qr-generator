@@ -44,6 +44,7 @@
 
   <body onclick="goBack()">
     <div id="qr"></div>
+    <p>QR rotates each <span id="rotatetime">X</span> seconds</p>
     <p>Tap anywhere to go back</p>
 
     <div id="progress-container">
@@ -51,7 +52,7 @@
     </div>
 
     <script>
-      const INTERVAL = 30000;
+      let INTERVAL = 30000;
       let startTime = Date.now();
 
       async function loadQr() {
@@ -59,8 +60,17 @@
         const data = await res.json();
 
         document.getElementById("qr").innerHTML = data.qrSvg;
+        document.getElementById("rotatetime").innerHTML = data.rotationTime / 1000;
+        INTERVAL = data.rotationTime;
+
         startTime = Date.now();
+
+        scheduleNext();
       }
+
+      function scheduleNext() {
+        setTimeout(loadQr, INTERVAL);
+      }   
 
       function updateProgress() {
         const elapsed = Date.now() - startTime;

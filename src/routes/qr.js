@@ -18,7 +18,7 @@ router.get('/api/qr', (_, res) => {
       margin: 2
     });
 
-    res.json({ qrSvg });
+    res.json({ qrSvg, rotationTime: process.env.QR_INTERVAL });
   });
 });
 

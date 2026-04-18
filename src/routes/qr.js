@@ -11,9 +11,14 @@ router.get('/api/qr', (_, res) => {
     }
 
     const qrText = stdout.trim();
-    const qrImage = await QRCode.toDataURL(qrText);
 
-    res.json({ qrImage });
+    const qrSvg = await QRCode.toString(qrText, {
+      type: 'svg',
+      errorCorrectionLevel: 'H',
+      margin: 2
+    });
+
+    res.json({ qrSvg });
   });
 });
 

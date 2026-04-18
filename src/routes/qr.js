@@ -4,10 +4,10 @@ const QRCode = require('qrcode');
 
 const router = express.Router();
 
-router.get('/api/qr', (req, res) => {
-  exec('echo "Hello-from-server-$(date +%s)"', async (err, stdout) => {
+router.get('/api/qr', (_, res) => {
+  exec(process.env.QR_COMMAND, async (err, stdout) => {
     if (err) {
-      return res.status(500).send('Error generating QR');
+        return res.status(500).send('Error generating QR');
     }
 
     const qrText = stdout.trim();

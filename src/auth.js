@@ -1,8 +1,5 @@
-require('dotenv').config({ path: '../.env' });
-
 function basicAuth(req, res, next) {
   const auth = req.headers.authorization;
-  console.log("trying to authenticate")
 
   if (!auth) {
     res.setHeader('WWW-Authenticate', 'Basic realm="QR App"');
@@ -18,7 +15,6 @@ function basicAuth(req, res, next) {
     user === process.env.BASIC_USER &&
     pass === process.env.BASIC_PASS
   ) {
-    console.log("successful auth")
     return next();
   }
 
